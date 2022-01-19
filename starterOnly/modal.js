@@ -1,5 +1,4 @@
 
-
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
@@ -27,6 +26,8 @@ inputFirstName.addEventListener('input', validateFirstName);
 //validate lastname
 
 inputLastName.addEventListener('input', validateLastName);
+
+
 
 //validate email
 
@@ -91,6 +92,7 @@ function isQuantityNumber(){
 }
 function launchModal(){
   modalbg.style.display = "block";
+  disableButton();
 }
 function showError(element){
   const parent = element.closest('.formData');
@@ -104,7 +106,9 @@ function validateEmail(){
   }
   validateForm()
 }
-
+// function isFirstNameValid(){
+//   return true
+// }
 function validateFirstName(){
  if(!isElementValid(inputFirstName.value)){
   showError(inputFirstName);
