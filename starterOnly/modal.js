@@ -10,6 +10,10 @@ const email = document.getElementById('email');
 const form = document.querySelector('form');
 const submit = document.querySelector('.btn-submit');
 const quantity = document.getElementById('quantity');
+const birthdate = document.getElementById('birthdate');
+const locations = document.querySelectorAll('[name="location"]');
+locations.forEach(location =>location.addEventListener('click', isLocationValid)); 
+
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -37,6 +41,15 @@ email.addEventListener('input', validateEmail);
 //validate quantity
 
 quantity.addEventListener('input', validateQuantity);
+
+
+// validate birthdate
+
+birthdate.addEventListener('input', validateBirthdate);
+
+// validate tournament
+
+
 
 
 //validate form
@@ -69,6 +82,15 @@ function hideError(element){
 const parent = element.closest('.formData');
 parent.setAttribute('data-error-visible', 'false');
 }
+function isBirthdateValid(){
+  const dateRegex = /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]|(?:Jan|Mar|May|Jul|Aug|Oct|Dec)))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2]|(?:Jan|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec))\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)(?:0?2|(?:Feb))\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9]|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep))|(?:1[0-2]|(?:Oct|Nov|Dec)))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
+  if(dateRegex.test(birthdate.value)){
+   return true
+  }else{
+    return false
+  }
+}
+
 function isElementValid (element) {
   if(element.length < 2){
  return false
@@ -82,6 +104,9 @@ function isEmailValid(){
     return true
   }
   return false
+}
+function isLocationValid(){
+  return true
 }
 function isQuantityNumber(){
   if(isNaN(quantity.value)){
@@ -98,6 +123,15 @@ function showError(element){
   const parent = element.closest('.formData');
   parent.setAttribute('data-error-visible', 'true');
 }
+function validateBirthdate(){
+  if(isBirthdateValid()){
+    hideError(birthdate);
+  }else{
+    showError(birthdate);
+  }
+  validateForm();
+}
+
 function validateEmail(){ 
   if(!isEmailValid()){
    showError(email);
@@ -106,9 +140,7 @@ function validateEmail(){
   }
   validateForm()
 }
-// function isFirstNameValid(){
-//   return true
-// }
+
 function validateFirstName(){
  if(!isElementValid(inputFirstName.value)){
   showError(inputFirstName);
@@ -118,9 +150,10 @@ function validateFirstName(){
   validateForm();
 }
 function validateForm(){
-  disableButton()
-  if(isElementValid(inputFirstName.value) && isElementValid(inputLastName.value) && isEmailValid() && isQuantityNumber()){
+  if(isElementValid(inputFirstName.value) && isElementValid(inputLastName.value) && isEmailValid() && isQuantityNumber() && isBirthdateValid() && isLocationValid()){
   enableButton();
+  }else{
+    disableButton()
   }
 }
 function validateLastName(){ 
@@ -130,6 +163,11 @@ function validateLastName(){
     hideError(inputLastName);
   }
 }
+function validateLocation() {
+  if(isLocationValid){
+    validateForm()
+  }
+  }
 function validateQuantity(){
   
   if(isQuantityNumber()){
