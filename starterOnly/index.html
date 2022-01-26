@@ -94,17 +94,17 @@
                 /><br>
               </div>
               <div
-                class="formData" data-error="entrez une date valide" data-error-visible="false" required>
+                class="formData" data-error="entrez une date valide" data-error-visible="false" >
                 <label>Date de naissance</label><br>
                 <input
                   class="text-control"
-                  type="text"
+                  type="date"
                   id="birthdate"
                   name="birthdate"
                 /><br>
               </div>
               <div
-                class="formData">
+                class="formData" data-error="entrez un nombre compris entre 0 et 99" data-error-visible="false">
                 <label for="quantity">À combien de tournois GameOn avez-vous déjà participé ?</label><br>
                 <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99">
               </div>
@@ -180,12 +180,12 @@
               </div>
 
               <div
-                class="formData">
+                class="formData" data-error="veuillez accepter les conditions d'utilisations" data-error-visible="false">
                 <input
                   class="checkbox-input"
                   type="checkbox"
                   id="checkbox1"
-                  checked
+                  
                 />
                 <label class="checkbox2-label" for="checkbox1" required>
                   <span class="checkbox-icon"></span>

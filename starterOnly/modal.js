@@ -11,59 +11,41 @@ const form = document.querySelector('form');
 const submit = document.querySelector('.btn-submit');
 const quantity = document.getElementById('quantity');
 const birthdate = document.getElementById('birthdate');
-const locations = document.querySelectorAll('[name="location"]');
-locations.forEach(location =>location.addEventListener('click', isLocationValid)); 
+const locations = document.querySelectorAll('.checkbox-input[name="location"]');
+const agreementBox = document.querySelector('#checkbox1');
 
 
-// launch modal event
+//listeners
+agreementBox.addEventListener('click', validateAgreement)
+
+locations.forEach((location) =>location.addEventListener('click', validateLocation)); 
+
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
-
-// close modal 
 
 closeModalBtn.addEventListener('click', closeModal);
 
-
-//validate firstname
-
 inputFirstName.addEventListener('input', validateFirstName);
-
-//validate lastname
 
 inputLastName.addEventListener('input', validateLastName);
 
-
-
-//validate email
-
 email.addEventListener('input', validateEmail);
-
-
-//validate quantity
 
 quantity.addEventListener('input', validateQuantity);
 
-
-// validate birthdate
-
 birthdate.addEventListener('input', validateBirthdate);
 
-// validate tournament
-
-
-
-
-//validate form
-
-//form.addEventListener('onSubmit', validate)
+form.addEventListener('submit', validate)
 
 
 function closeModal(){
   modalbg.style.display = "none";
 }
+
 function disableButton(){
   submit.setAttribute("disabled", ""); 
   submit.style.opacity = 0.3;
 }
+
 function editNav(){
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
@@ -82,13 +64,22 @@ function hideError(element){
 const parent = element.closest('.formData');
 parent.setAttribute('data-error-visible', 'false');
 }
-function isBirthdateValid(){
-  const dateRegex = /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]|(?:Jan|Mar|May|Jul|Aug|Oct|Dec)))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2]|(?:Jan|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec))\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)(?:0?2|(?:Feb))\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9]|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep))|(?:1[0-2]|(?:Oct|Nov|Dec)))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
-  if(dateRegex.test(birthdate.value)){
-   return true
+
+function isAgreementBoxChecked(){
+  if(agreementBox.checked){
+    return true; 
   }else{
-    return false
+    return false;
   }
+ 
+}
+
+function isBirthdateValid(){
+if(birthdate.value.length ===10){
+ return true
+}else{
+  return false
+}
 }
 
 function isElementValid (element) {
@@ -98,6 +89,7 @@ function isElementValid (element) {
    return true
   }
  }
+
 function isEmailValid(){
   let pattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
   if(pattern.test(email.value)){
@@ -105,24 +97,46 @@ function isEmailValid(){
   }
   return false
 }
+
 function isLocationValid(){
-  return true
+  let isValid = false;
+  locations.forEach(location => {
+    if(location.checked){
+      isValid = true;
+    }
+  })
+  return isValid;
 }
-function isQuantityNumber(){
-  if(isNaN(quantity.value)){
-  return false
+
+function isQuantityValid(){
+  if(quantity.value.length > 0){
+  return true
   }else{
-    return true
+    return false
   }
 }
+
 function launchModal(){
   modalbg.style.display = "block";
   disableButton();
 }
+
 function showError(element){
   const parent = element.closest('.formData');
   parent.setAttribute('data-error-visible', 'true');
 }
+
+function validate (event){
+event.preventDefault();
+form.innerHTML = "Merci ! Votre réservation a été reçue."
+}
+
+function validateAgreement (){
+  if(isAgreementBoxChecked){
+    validateForm();
+  }
+}
+
 function validateBirthdate(){
   if(isBirthdateValid()){
     hideError(birthdate);
@@ -149,13 +163,21 @@ function validateFirstName(){
  }
   validateForm();
 }
+
 function validateForm(){
-  if(isElementValid(inputFirstName.value) && isElementValid(inputLastName.value) && isEmailValid() && isQuantityNumber() && isBirthdateValid() && isLocationValid()){
+  if(isElementValid(inputFirstName.value)
+   && isElementValid(inputLastName.value)
+   && isEmailValid() 
+   && isQuantityValid() 
+   && isBirthdateValid() 
+   && isLocationValid()
+   && isAgreementBoxChecked()){
   enableButton();
   }else{
     disableButton()
   }
 }
+
 function validateLastName(){ 
   if(!isElementValid(inputLastName.value)){
     showError(inputLastName);
@@ -163,14 +185,16 @@ function validateLastName(){
     hideError(inputLastName);
   }
 }
+
 function validateLocation() {
-  if(isLocationValid){
+  if(isLocationValid()){
     validateForm()
   }
   }
+
 function validateQuantity(){
   
-  if(isQuantityNumber()){
+  if(isQuantityValid()){
     hideError(quantity);
   }else{
     showError(quantity);
