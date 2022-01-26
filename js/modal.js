@@ -32,7 +32,7 @@ email.addEventListener('input', validateEmail);
 
 quantity.addEventListener('input', validateQuantity);
 
-birthdate.addEventListener('input', validateBirthdate);
+birthdate.addEventListener('keydown', validateBirthdate);
 
 form.addEventListener('submit', validate)
 
@@ -75,7 +75,7 @@ function isAgreementBoxChecked(){
 }
 
 function isBirthdateValid(){
-if(birthdate.value.length ===10){
+if(birthdate.value.length === 10){
  return true
 }else{
   return false
