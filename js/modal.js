@@ -13,7 +13,9 @@ const quantity = document.getElementById('quantity');
 const birthdate = document.getElementById('birthdate');
 const locations = document.querySelectorAll('.checkbox-input[name="location"]');
 const agreementBox = document.querySelector('#checkbox1');
-
+const agreementLabel = document.querySelector('#checkbox-agree');
+console.log(agreementBox)
+ 
 
 //listeners
 agreementBox.addEventListener('click', validateAgreement)
@@ -35,6 +37,7 @@ quantity.addEventListener('input', validateQuantity);
 birthdate.addEventListener('keydown', validateBirthdate);
 
 form.addEventListener('submit', validate)
+
 
 
 function closeModal(){
@@ -61,33 +64,30 @@ function enableButton(){
 }
 
 function hideError(element){
-const parent = element.closest('.formData');
-parent.setAttribute('data-error-visible', 'false');
+  const parent = element.closest('.formData');
+  parent.setAttribute('data-error-visible', 'false');
 }
 
 function isAgreementBoxChecked(){
   if(agreementBox.checked){
     return true; 
-  }else{
-    return false;
   }
- 
+  return false;
 }
 
 function isBirthdateValid(){
-if(birthdate.value.length === 10){
- return true
-}else{
+  if(birthdate.value.length === 10){
+    return true
+  }
   return false
-}
 }
 
 function isElementValid (element) {
   if(element.length < 2){
- return false
-  }else{
-   return true
+    return false
   }
+    return true
+  
  }
 
 function isEmailValid(){
@@ -95,7 +95,7 @@ function isEmailValid(){
   if(pattern.test(email.value)){
     return true
   }
-  return false
+    return false
 }
 
 function isLocationValid(){
@@ -105,21 +105,23 @@ function isLocationValid(){
       isValid = true;
     }
   })
-  return isValid;
+    return isValid;
 }
 
 function isQuantityValid(){
-  if(quantity.value.length > 0){
-  return true
-  }else{
-    return false
+  let quantityV = quantity.value;
+  if(quantityV.length > 0 && quantityV >= 0 && quantityV < 99){
+    return true
   }
+    return false  
 }
 
 function launchModal(){
   modalbg.style.display = "block";
   disableButton();
 }
+
+/**Permet de montrer l'erreur au cas ou la donnee saisie n'est pas correcte */
 
 function showError(element){
   const parent = element.closest('.formData');
@@ -132,8 +134,12 @@ form.innerHTML = "Merci ! Votre réservation a été reçue."
 }
 
 function validateAgreement (){
+  
   if(isAgreementBoxChecked){
+    hideError(agreementLabel);
     validateForm();
+  }else{
+    showError(agreementLabel);
   }
 }
 
