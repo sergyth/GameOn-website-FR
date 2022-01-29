@@ -1,52 +1,53 @@
-
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
-const inputFirstName = document.getElementById('first');
-const closeModalBtn =document.querySelector('.close');
-const inputLastName = document.getElementById('last');
-const email = document.getElementById('email');
-const form = document.querySelector('form');
-const submit = document.querySelector('.btn-submit');
-const quantity = document.getElementById('quantity');
-const birthdate = document.getElementById('birthdate');
+const firstname = document.getElementById("first");
+const closeModalBtn = document.querySelector(".close");
+const lastname = document.getElementById("last");
+const email = document.getElementById("email");
+const form = document.querySelector("form");
+const submit = document.querySelector(".btn-submit");
+const quantity = document.getElementById("quantity");
+const birthdate = document.getElementById("birthdate");
 const locations = document.querySelectorAll('.checkbox-input[name="location"]');
-const agreementBox = document.querySelector('#checkbox1');
-
+const agreementBox = document.querySelector("#checkbox1");
 
 //listeners
-agreementBox.addEventListener('click', validateAgreement)
+agreementBox.addEventListener("click", validateAgreement);
 
-locations.forEach((location) =>location.addEventListener('click', validateLocation)); 
+locations.forEach((location) =>
+  location.addEventListener("click", validateLocation),
+);
 
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
-closeModalBtn.addEventListener('click', closeModal);
+closeModalBtn.addEventListener("click", closeModal);
 
-inputFirstName.addEventListener('input', validateFirstName);
+firstname.addEventListener("input", validateFirstname);
 
-inputLastName.addEventListener('input', validateLastName);
+lastname.addEventListener("input", validateLastname);
 
-email.addEventListener('input', validateEmail);
+email.addEventListener("input", validateEmail);
 
-quantity.addEventListener('input', validateQuantity);
+quantity.addEventListener("input", validateQuantity);
 
-birthdate.addEventListener('keydown', validateBirthdate);
+birthdate.addEventListener("keydown", validateBirthdate);
 
-form.addEventListener('submit', validate)
+form.addEventListener("submit", validate);
 
+// funtions
 
-function closeModal(){
+function closeModal() {
   modalbg.style.display = "none";
 }
 
-function disableButton(){
-  submit.setAttribute("disabled", ""); 
+function disableButton() {
+  submit.setAttribute("disabled", "");
   submit.style.opacity = 0.3;
 }
 
-function editNav(){
+function editNav() {
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
     x.className += " responsive";
@@ -55,153 +56,169 @@ function editNav(){
   }
 }
 
-function enableButton(){
+function enableButton() {
   submit.removeAttribute("disabled", "");
   submit.style.opacity = 1;
 }
 
-function hideError(element){
-const parent = element.closest('.formData');
-parent.setAttribute('data-error-visible', 'false');
+function hideError(element) {
+  const parent = element.closest(".formData");
+  parent.setAttribute("data-error-visible", "false");
 }
 
-function isAgreementBoxChecked(){
-  if(agreementBox.checked){
-    return true; 
-  }else{
+function isAgreementBoxChecked() {
+  if (agreementBox.checked) {
+    return true;
+  } else {
     return false;
   }
- 
 }
 
-function isBirthdateValid(){
-if(birthdate.value.length === 10){
- return true
-}else{
-  return false
-}
+function isBirthdateValid() {
+  if (birthdate.value.length === 10) {
+    return true;
+  } 
+    return false;
+  
 }
 
-function isElementValid (element) {
-  if(element.length < 2){
- return false
-  }else{
-   return true
+function isFirstnameValid() {
+  if (firstname.value.length < 2) {
+    return false;
   }
- }
+  return true;
+}
+function isLastnameValid() {
+  if (lastname.value.length < 2) {
+    return false;
+  }
+  return true;
+}
 
-function isEmailValid(){
+/**use a regex that verifie if the email format enter by the user is correct */
+
+function isEmailValid() {
   let pattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-  if(pattern.test(email.value)){
-    return true
+  if (pattern.test(email.value)) {
+    return true;
   }
-  return false
+    return false;
 }
 
-function isLocationValid(){
+
+// verify if a location is selected
+
+function isLocationValid() {
   let isValid = false;
-  locations.forEach(location => {
-    if(location.checked){
+  locations.forEach((location) => {
+    if (location.checked) {
       isValid = true;
     }
-  })
+  });
   return isValid;
 }
 
-function isQuantityValid(){
-  if(quantity.value.length > 0){
-  return true
-  }else{
-    return false
+function isQuantityValid() {
+
+  let qty = quantity.value;
+  if (qty.length > 0 && 0 <= qty && qty <= 99) {
+    return true;
+  } else {
+    return false;
   }
 }
 
-function launchModal(){
+/**open the modal and disable the submit button, also shows checkboxes errors */
+
+function launchModal() {
   modalbg.style.display = "block";
+  showError(locations[0]);
+  showError(agreementBox);
   disableButton();
 }
 
-function showError(element){
-  const parent = element.closest('.formData');
-  parent.setAttribute('data-error-visible', 'true');
+function showError(element) {
+  const parent = element.closest(".formData");
+  parent.setAttribute("data-error-visible", "true");
 }
 
-function validate (event){
-event.preventDefault();
-form.innerHTML = "Merci ! Votre réservation a été reçue."
+function validate(event) {
+  event.preventDefault();
+  form.innerHTML = "Merci ! Votre réservation a été reçue.";
 }
 
-function validateAgreement (){
-  if(isAgreementBoxChecked){
+// hide error when checkbox agreement is selected
+
+function validateAgreement() {
+  if (isAgreementBoxChecked) {
+    hideError(agreementBox);
     validateForm();
   }
 }
 
-function validateBirthdate(){
-  if(isBirthdateValid()){
+function validateBirthdate() {
+  if (isBirthdateValid()) {
     hideError(birthdate);
-  }else{
+  } else {
     showError(birthdate);
   }
   validateForm();
 }
 
-function validateEmail(){ 
-  if(!isEmailValid()){
-   showError(email);
-  }else{
+function validateEmail() {
+  if (!isEmailValid()) {
+    showError(email);
+  } else {
     hideError(email);
   }
-  validateForm()
-}
-
-function validateFirstName(){
- if(!isElementValid(inputFirstName.value)){
-  showError(inputFirstName);
- }else{
-  hideError(inputFirstName);
- }
   validateForm();
 }
 
-function validateForm(){
-  if(isElementValid(inputFirstName.value)
-   && isElementValid(inputLastName.value)
-   && isEmailValid() 
-   && isQuantityValid() 
-   && isBirthdateValid() 
-   && isLocationValid()
-   && isAgreementBoxChecked()){
-  enableButton();
-  }else{
-    disableButton()
+function validateFirstname() {
+  if (!isFirstnameValid()) {
+    showError(firstname);
+  } else {
+    hideError(firstname);
+  }
+  validateForm();
+}
+
+function validateForm() {
+  if (
+    isFirstnameValid() &&
+    isLastnameValid() &&
+    isEmailValid() &&
+    isQuantityValid() &&
+    isBirthdateValid() &&
+    isLocationValid() &&
+    isAgreementBoxChecked()
+  ) {
+    enableButton();
+  } else {
+    disableButton();
   }
 }
 
-function validateLastName(){ 
-  if(!isElementValid(inputLastName.value)){
-    showError(inputLastName);
-  }else{
-    hideError(inputLastName);
+function validateLastname() {
+  if (!isLastnameValid()) {
+    showError(lastname);
+  } else {
+    hideError(lastname);
   }
 }
 
 function validateLocation() {
-  if(isLocationValid()){
-    validateForm()
+  if (isLocationValid()) {
+    hideError(locations[0]);
+    validateForm();
   }
-  }
+}
 
-function validateQuantity(){
-  
-  if(isQuantityValid()){
+function validateQuantity() {
+  if (isQuantityValid()) {
     hideError(quantity);
-  }else{
+  } else {
     showError(quantity);
   }
   validateForm();
 }
-
-
-
-
