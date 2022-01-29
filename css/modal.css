@@ -8,12 +8,16 @@
   margin: 0;
   padding: 0;
 }
+.red-b{
+  border: 1px solid red;
+}
 /* Landing Page */
 
 body {
   margin: 0;
   display: flex;
   flex-direction: column;
+  /* background-image: url("background.png"); */
   font-family: var(--font-default);
   font-size: 18px;
   max-width: 1300px;
@@ -440,7 +444,7 @@ input[data-error]::after {
 .hero-headline {
   font-size: 6rem;
   font-weight: normal;
-  white-space: wrap;
+  white-space: normal;
 }
 .hero-text {
   width: 146%;
@@ -533,7 +537,7 @@ footer {
   .hero-headline{
     font-size: 3rem;
     text-align:center;
-    white-space: wrap;
+    white-space: normal;
   }
   .hero-section{
     min-width: 320px;
