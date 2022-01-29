@@ -1,7 +1,6 @@
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-const formData = document.querySelectorAll(".formData");
 const firstname = document.getElementById("first");
 const closeModalBtn = document.querySelector(".close");
 const lastname = document.getElementById("last");
