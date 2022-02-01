@@ -35,7 +35,7 @@ birthdate.addEventListener("keydown", validateBirthdate);
 
 form.addEventListener("submit", validate);
 
-// funtions
+// functions
 
 function closeModal() {
   modalbg.style.display = "none";
@@ -71,7 +71,7 @@ function isAgreementBoxChecked() {
   if (agreementBox.checked) {
     return true;
   } 
-    return false;  
+  return false;  
 }
 
 function isBirthdateValid() {
@@ -94,8 +94,9 @@ function isLastnameValid() {
     return true;
 }
 
-/**use a regex that verify if the email format enter by the user is correct */
-
+/**use a regex that verify if the email
+ *  format enter by the user is correct 
+ */
 function isEmailValid() {
   let pattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
   if (pattern.test(email.value)) {
@@ -104,9 +105,7 @@ function isEmailValid() {
     return false;
 }
 
-
 // verify if a location is selected
-
 function isLocationValid() {
   let isValid = false;
   locations.forEach((location) => {
@@ -126,17 +125,14 @@ function isQuantityValid() {
 }
 
 /**open the modal and disable the submit button,
- *  also shows checkboxes errors */
-
+ *  also shows checkboxes errors 
+ */
 function launchModal() {
   modalbg.style.display = "block";
-  showError(locations[0]);
-  showError(agreementBox);
   disableButton();
 }
 
-/**set the value of data-error-visible to true */
-
+//set the value of data-error-visible to true 
 function showError(element) {
   const parent = element.closest(".formData");
   parent.setAttribute("data-error-visible", "true");
@@ -148,14 +144,14 @@ function validate(event) {
 }
 
 // hide error when checkbox agreement is selected
-
 function validateAgreement() {
+  
   if (isAgreementBoxChecked()) {
-    hideError(agreementBox);
-    validateForm();
+    hideError(agreementBox);  
   }else{
     showError(agreementBox);
   }
+  validateForm();
 }
 
 function validateBirthdate() {
@@ -179,7 +175,6 @@ function validateEmail() {
 /**verify if the firstname input value is not and shows the error message
  * if not hide the error message
  */
-
 function validateFirstname() {
   if (!isFirstnameValid()) {
     showError(firstname);
@@ -188,10 +183,10 @@ function validateFirstname() {
   }
   validateForm();
 }
+
 /**verify if all the input value of the form are equal to true
  * and eventualy call the enableButton/disableButton.
  */
-
 function validateForm() {
   if (isFirstnameValid()
     && isLastnameValid()
@@ -218,13 +213,15 @@ function validateLastname() {
 function validateLocation() {
   if (isLocationValid()) {
     hideError(locations[0]);
-    validateForm();
+    showError(agreementBox);
   }
+  validateForm();
 }
 
 function validateQuantity() {
   if (isQuantityValid()) {
     hideError(quantity);
+    showError(locations[0])
   } else {
     showError(quantity);
   }
