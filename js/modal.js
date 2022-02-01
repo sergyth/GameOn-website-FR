@@ -176,6 +176,10 @@ function validateEmail() {
   validateForm();
 }
 
+/**verify if the firstname input value is not and shows the error message
+ * if not hide the error message
+ */
+
 function validateFirstname() {
   if (!isFirstnameValid()) {
     showError(firstname);
@@ -184,6 +188,9 @@ function validateFirstname() {
   }
   validateForm();
 }
+/**verify if all the input value of the form are equal to true
+ * and eventualy call the enableButton/disableButton.
+ */
 
 function validateForm() {
   if (isFirstnameValid()
