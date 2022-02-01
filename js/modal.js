@@ -172,7 +172,7 @@ function validateEmail() {
   validateForm();
 }
 
-/**verify if the firstname input value is not and shows the error message
+/**verify if the firstname input value is not true and shows the error message
  * if not hide the error message
  */
 function validateFirstname() {
