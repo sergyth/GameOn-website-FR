@@ -68,33 +68,31 @@ function hideError(element) {
 function isAgreementBoxChecked() {
   if (agreementBox.checked) {
     return true;
-  } else {
-    return false;
-  }
+  } 
+    return false;  
 }
 
 function isBirthdateValid() {
   if (birthdate.value.length === 10) {
     return true;
   } 
-    return false;
-  
+    return false; 
 }
 
 function isFirstnameValid() {
   if (firstname.value.length < 2) {
     return false;
   }
-  return true;
+    return true;
 }
 function isLastnameValid() {
   if (lastname.value.length < 2) {
     return false;
   }
-  return true;
+    return true;
 }
 
-/**use a regex that verifie if the email format enter by the user is correct */
+/**use a regex that verify if the email format enter by the user is correct */
 
 function isEmailValid() {
   let pattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
@@ -118,17 +116,15 @@ function isLocationValid() {
 }
 
 function isQuantityValid() {
-
   let qty = quantity.value;
   if (qty.length > 0 && 0 <= qty && qty <= 99) {
     return true;
-  } else {
+  } 
     return false;
-  }
-    return false  
 }
 
-/**open the modal and disable the submit button, also shows checkboxes errors */
+/**open the modal and disable the submit button,
+ *  also shows checkboxes errors */
 
 function launchModal() {
   modalbg.style.display = "block";
@@ -136,6 +132,8 @@ function launchModal() {
   showError(agreementBox);
   disableButton();
 }
+
+/**set the value of data-error-visible to true */
 
 function showError(element) {
   const parent = element.closest(".formData");
@@ -150,11 +148,11 @@ function validate(event) {
 // hide error when checkbox agreement is selected
 
 function validateAgreement() {
-  if (isAgreementBoxChecked) {
+  if (isAgreementBoxChecked()) {
     hideError(agreementBox);
     validateForm();
   }else{
-    showError(agreementLabel);
+    showError(agreementBox);
   }
 }
 
@@ -186,15 +184,14 @@ function validateFirstname() {
 }
 
 function validateForm() {
-  if (
-    isFirstnameValid() &&
-    isLastnameValid() &&
-    isEmailValid() &&
-    isQuantityValid() &&
-    isBirthdateValid() &&
-    isLocationValid() &&
-    isAgreementBoxChecked()
-  ) {
+  if (isFirstnameValid()
+    && isLastnameValid()
+    && isEmailValid()
+    && isQuantityValid()
+    && isBirthdateValid() 
+    && isLocationValid() 
+    && isAgreementBoxChecked()) 
+  {
     enableButton();
   } else {
     disableButton();
