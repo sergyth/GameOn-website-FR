@@ -44,6 +44,7 @@ function closeModal() {
 function disableButton() {
   submit.setAttribute("disabled", "");
   submit.style.opacity = 0.3;
+  submit.style.cursor = 'not-allowed';
 }
 
 function editNav() {
@@ -58,6 +59,7 @@ function editNav() {
 function enableButton() {
   submit.removeAttribute("disabled", "");
   submit.style.opacity = 1;
+  submit.style.cursor = 'pointer';
 }
 
 function hideError(element) {
