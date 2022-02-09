@@ -11,6 +11,9 @@ const quantity = document.getElementById("quantity");
 const birthdate = document.getElementById("birthdate");
 const locations = document.querySelectorAll('.checkbox-input[name="location"]');
 const agreementBox = document.querySelector("#checkbox1");
+const confirmation = document.getElementById('confirm');
+
+
 
 //listeners
 agreementBox.addEventListener("click", validateAgreement);
@@ -31,9 +34,10 @@ email.addEventListener("input", validateEmail);
 
 quantity.addEventListener("input", validateQuantity);
 
-birthdate.addEventListener("keydown", validateBirthdate);
+birthdate.addEventListener("input", validateBirthdate);
 
 form.addEventListener("submit", validate);
+
 
 // functions
 
@@ -129,6 +133,9 @@ function isQuantityValid() {
  */
 function launchModal() {
   modalbg.style.display = "block";
+  confirmation.style.display = 'none';
+  form.style.display = 'block';
+  form.reset();
   disableButton();
 }
 
@@ -140,7 +147,9 @@ function showError(element) {
 
 function validate(event) {
   event.preventDefault();
-  form.innerHTML = "Merci ! Votre réservation a été reçue.";
+  form.style.display = 'none';
+  confirmation.style.display = 'block';
+ 
 }
 
 // hide error when checkbox agreement is selected
