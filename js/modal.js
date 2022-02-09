@@ -79,10 +79,34 @@ function isAgreementBoxChecked() {
 }
 
 function isBirthdateValid() {
-  if (birthdate.value.length === 10) {
-    return true;
-  } 
-    return false; 
+ let pattern = new RegExp(/(\d{4})(|-|\/|)(\d{2})(|-|\/|)(\d{2})/);
+ let items = birthdate.value.split('-');
+ let days = items[2];
+ let month = items[1];
+ let year = items[0];
+ if(!pattern.test(birthdate.value)){
+   
+   return false;
+ }
+ if(year > 2022 || year < 1900  ){
+   return false;
+ }
+ if(month === 2){
+   if(days > 29){
+     return false;
+   }
+   if(days === 29){
+     if(year%4 > 0){
+       return false;
+     }
+     if(year%4 === 0 && year%100 === 0){
+       if(year%400 > 0){
+         return false;
+       }
+     }
+   }
+ }
+ return true
 }
 
 function isFirstnameValid() {
@@ -106,7 +130,7 @@ function isEmailValid() {
   if (pattern.test(email.value)) {
     return true;
   }
-    return false;
+  return false;
 }
 
 // verify if a location is selected
